@@ -8,11 +8,10 @@ public class allunitinformation : MonoBehaviour {
 	public string BundleURL="https://s3.ap-northeast-2.amazonaws.com/igurs-rts/assetBundle/unit.unity3d";
 	public string unitTableURL="https://quuqawenjj.execute-api.us-west-2.amazonaws.com/unitclass";
 	public int version = 1;
-	static ArrayList Unit=new ArrayList();
-	static ArrayList Building=new ArrayList();
-	static ArrayList Hero=new ArrayList(); //Hero
-	static ArrayList AllUnit=new ArrayList(); //모든 유닛
-	static ArrayList allassetinfor=new ArrayList();
+	static public ArrayList Unit=new ArrayList();
+	static public ArrayList Building =new ArrayList();
+	static public ArrayList Hero =new ArrayList(); //Hero
+	static public ArrayList AllUnit =new ArrayList(); //모든 유닛
 	public static GameObject gametmp;
 
 

@@ -49,9 +49,13 @@ public class unitclass : MonoBehaviour {
 
 	public int card=0;
 	public int level=0;
+    public int tier = 0;
 
 	public GameObject misaleobject;
 	public GameObject trainunitobject;
+
+    public Sprite icon;
+
 	NavMeshAgent agent;
 	// Use this for initialization
 	void Start () {
