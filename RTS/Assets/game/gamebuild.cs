@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class gamebuild : MonoBehaviour {
 
-	public int[,] gametile=new int[100,100]; //0이면 빈칸 1이면 차있는칸 2면 자원
+	public int[,] gametile=new int[26,42]; //0이면 빈칸 1이면 차있는칸 2면 자원
 	GameObject buildobject=null;
 	public GameObject greentile;
 
@@ -15,7 +15,7 @@ public class gamebuild : MonoBehaviour {
 	public GameObject destflag;
 	public GameObject enemydestflag;
 	public Vector3 destflagstartxy;
-	static public Vector3 enemydestflagstartxy =new Vector3(73,0,30);
+	static public Vector3 enemydestflagstartxy =new Vector3(15,0,15);
 	// Use this for initialization
 	void Start () {
 		for (int i = 0; i < gametile.GetLength (0); i++) {

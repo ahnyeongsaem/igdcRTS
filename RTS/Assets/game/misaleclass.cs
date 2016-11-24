@@ -3,7 +3,6 @@ using System.Collections;
 
 public class misaleclass : MonoBehaviour {
 
-	public string misalename;
 	float misalespeed;
 	int dmg;
 	GameObject targetgo;

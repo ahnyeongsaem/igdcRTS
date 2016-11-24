@@ -161,39 +161,46 @@ public class allunitinformation : MonoBehaviour {
             return;
         }
 		gametmp.AddComponent<unitclass>();
-		((GameObject)gametmp).AddComponent <NavMeshAgent>();
-		((GameObject)gametmp).AddComponent <LOSEntity>();
+		gametmp.AddComponent <NavMeshAgent>();
+		gametmp.AddComponent <LOSEntity>();
 
-		((GameObject)gametmp).GetComponent<unitclass> ().unitname = (string)unitstatus [i] ["unitname"];
-		((GameObject)gametmp).GetComponent<unitclass> ().unittype = 
+		gametmp.GetComponent<unitclass> ().unitname = (string)unitstatus [i] ["unitname"];
+		gametmp.GetComponent<unitclass> ().unittype = 
 			(unitclass.Unittype) Enum.Parse(typeof(unitclass.Unittype),(string)unitstatus [i] ["unittype"], true);
-		((GameObject)gametmp).GetComponent<unitclass> ().movetype = 
+		gametmp.GetComponent<unitclass> ().movetype = 
 			(unitclass.Movetype) Enum.Parse(typeof(unitclass.Movetype),(string)unitstatus [i] ["movetype"], true);
-		((GameObject)gametmp).GetComponent<unitclass> ().attacktarget = 
+		gametmp.GetComponent<unitclass> ().attacktarget = 
 			(unitclass.Attacktarget) Enum.Parse(typeof(unitclass.Attacktarget),(string)unitstatus [i] ["attacktarget"], true);
-		((GameObject)gametmp).GetComponent<unitclass> ().attribute = 
+		gametmp.GetComponent<unitclass> ().attribute = 
 			(unitclass.Attribute) Enum.Parse(typeof(unitclass.Attribute),(string)unitstatus [i] ["attribute"], true);
-		((GameObject)gametmp).GetComponent<unitclass> ().unitsize=new Vector2((int)unitstatus [i] ["unitsize"],(int)unitstatus [i] ["unitsize"]);
-		((GameObject)gametmp).GetComponent<unitclass> ().maxhp = (int)unitstatus [i] ["maxhp"];
-		((GameObject)gametmp).GetComponent<unitclass> ().maxdmg = (int)unitstatus [i] ["maxdmg"];
-		((GameObject)gametmp).GetComponent<unitclass> ().maxspeed = Convert.ToSingle(unitstatus [i] ["maxspeed"]);
-		((GameObject)gametmp).GetComponent<unitclass> ().attackrange = Convert.ToSingle(unitstatus [i] ["attackrange"]);
-		((GameObject)gametmp).GetComponent<unitclass> ().attackspeed = Convert.ToSingle(unitstatus [i] ["attackspeed"]);
-		((GameObject)gametmp).GetComponent<unitclass> ().misalespeed = Convert.ToSingle(unitstatus [i] ["misalespeed"]);
-		((GameObject)gametmp).GetComponent<unitclass> ().attacksplashrange = Convert.ToSingle(unitstatus [i] ["attacksplashrange"]);
-		((GameObject)gametmp).GetComponent<unitclass> ().maxtrainingspeed = Convert.ToSingle(unitstatus [i] ["maxtrainingspeed"]);
-		((GameObject)gametmp).GetComponent<unitclass> ().sightrange = Convert.ToSingle(unitstatus [i] ["sightrange"]);
-        ((GameObject)gametmp).GetComponent<unitclass> ().tier = (int)unitstatus[i]["tier"];
+		gametmp.GetComponent<unitclass> ().unitsize=new Vector2((int)unitstatus [i] ["unitsize"],(int)unitstatus [i] ["unitsize"]);
+		gametmp.GetComponent<unitclass> ().maxhp = (int)unitstatus [i] ["maxhp"];
+		gametmp.GetComponent<unitclass> ().maxdmg = (int)unitstatus [i] ["maxdmg"];
+		gametmp.GetComponent<unitclass> ().maxspeed = Convert.ToSingle(unitstatus [i] ["maxspeed"]);
+		gametmp.GetComponent<unitclass> ().attackrange = Convert.ToSingle(unitstatus [i] ["attackrange"]);
+		gametmp.GetComponent<unitclass> ().attackspeed = Convert.ToSingle(unitstatus [i] ["attackspeed"]);
+		gametmp.GetComponent<unitclass> ().misalespeed = Convert.ToSingle(unitstatus [i] ["misalespeed"]);
+		gametmp.GetComponent<unitclass> ().attacksplashrange = Convert.ToSingle(unitstatus [i] ["attacksplashrange"]);
+		gametmp.GetComponent<unitclass> ().maxtrainingspeed = Convert.ToSingle(unitstatus [i] ["maxtrainingspeed"]);
+		gametmp.GetComponent<unitclass> ().sightrange = Convert.ToSingle(unitstatus [i] ["sightrange"]);
+        gametmp.GetComponent<unitclass> ().tier = (int)unitstatus[i]["tier"];
         if (unitstatus[i].ContainsKey("icon"))
         {
-            ((GameObject)gametmp).GetComponent<unitclass>().icon = Resources.Load<Sprite>("icon/" + unitstatus[i]["icon"]);
+            gametmp.GetComponent<unitclass>().icon = Resources.Load<Sprite>("icon/" + unitstatus[i]["icon"]);
         }
         else
         {
             Debug.Log("aws table not have icon" + unitstatus[i]["unitname"]);
         }
-
-        //TODO : misaleobject particle trainunitobject
+        if (unitstatus[i].ContainsKey("misaleobject"))
+        {
+            gametmp.GetComponent<unitclass>().misaleobject = Resources.Load("misale/" + unitstatus[i]["misaleobject"],typeof(GameObject)) as GameObject;
+        }
+        else
+        {
+            Debug.Log("aws table not have icon" + unitstatus[i]["unitname"]);
+        }
+        //TODO : trainunitobject
     }
 
     ///debug all unit asset

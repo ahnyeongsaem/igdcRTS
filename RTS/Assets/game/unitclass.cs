@@ -158,9 +158,9 @@ public class unitclass : MonoBehaviour {
 
 					GameObject tmpmisale = Instantiate<GameObject> (misaleobject);
 					tmpmisale.transform.position = transform.position;
-					if (tag == "player")
+					if (tag == "PLAYER")
 						tmpmisale.GetComponent<misaleclass> ().misaleinit (dmg, targetenemy, misalespeed, attacksplashrange, attacktarget, true, attribute);
-					else
+					else if(tag== "ENEMY")
 						tmpmisale.GetComponent<misaleclass> ().misaleinit (dmg, targetenemy, misalespeed, attacksplashrange, attacktarget, false, attribute);
 				}
 			}

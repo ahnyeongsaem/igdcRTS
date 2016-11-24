@@ -26,7 +26,7 @@ Library/cache/**
 
 Library/expandedItems/**
 
-Library/metadata/**
+**/Library/metadata/**
 
 Library/previews/**
 
