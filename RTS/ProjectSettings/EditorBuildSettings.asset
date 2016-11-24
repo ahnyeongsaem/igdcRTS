@@ -9,15 +9,15 @@ EditorBuildSettings:
     path: Assets/main.unity
   - enabled: 1
     path: Assets/game.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/main-battle.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/main-battle-loading.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/main-inven.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/main-option.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/main-shop.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/main-tech.unity

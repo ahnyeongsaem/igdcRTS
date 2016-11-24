@@ -26,7 +26,7 @@ public class changeScene : MonoBehaviour {
     }
     public void SceneChange6()
     {
-        SceneManager.LoadScene("main-battle-loading");
+        SceneManager.LoadScene("game");
     }
 
 }
