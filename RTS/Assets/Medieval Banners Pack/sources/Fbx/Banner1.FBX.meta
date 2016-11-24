@@ -1,0 +1,174 @@
+fileFormatVersion: 2
+guid: 1e989ff2256177e47b2d70c8f4d69fc4
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Banner1
+    100004: Banner1 support
+    100006: Banner1_Bone001
+    100008: Banner1_Bone002
+    100010: Banner1_Bone003
+    100012: Banner1_Bone005
+    100014: Banner1_root
+    100016: metal deco
+    400000: //RootNode
+    400002: Banner1
+    400004: Banner1 support
+    400006: Banner1_Bone001
+    400008: Banner1_Bone002
+    400010: Banner1_Bone003
+    400012: Banner1_Bone005
+    400014: Banner1_root
+    400016: metal deco
+    4300000: Banner1 support
+    4300002: Banner1
+    4300004: metal deco
+    7400000: Banner1 strong
+    7400002: Banner1 slow
+    9500000: //RootNode
+    13700000: Banner1
+    13700002: Banner1 support
+    13700004: metal deco
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Banner1 strong
+      takeName: Banniere_1-2012
+      firstFrame: 0
+      lastFrame: 341
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Banner1
+        weight: 1
+      - path: Banner1 support
+        weight: 1
+      - path: Banner1_root
+        weight: 1
+      - path: Banner1_root/Banner1_Bone001
+        weight: 1
+      - path: Banner1_root/Banner1_Bone001/Banner1_Bone002
+        weight: 1
+      - path: Banner1_root/Banner1_Bone001/Banner1_Bone002/Banner1_Bone003
+        weight: 1
+      - path: Banner1_root/Banner1_Bone001/Banner1_Bone002/Banner1_Bone005
+        weight: 1
+      - path: metal deco
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Banner1 slow
+      takeName: Banniere_1-2012
+      firstFrame: 401
+      lastFrame: 741
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Banner1
+        weight: 1
+      - path: Banner1 support
+        weight: 1
+      - path: Banner1_root
+        weight: 1
+      - path: Banner1_root/Banner1_Bone001
+        weight: 1
+      - path: Banner1_root/Banner1_Bone001/Banner1_Bone002
+        weight: 1
+      - path: Banner1_root/Banner1_Bone001/Banner1_Bone002/Banner1_Bone003
+        weight: 1
+      - path: Banner1_root/Banner1_Bone001/Banner1_Bone002/Banner1_Bone005
+        weight: 1
+      - path: metal deco
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

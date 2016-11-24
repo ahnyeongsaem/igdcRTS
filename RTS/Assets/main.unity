@@ -1238,6 +1238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e601dffc6c47a41be645cf913e4d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerinformationtableurl: https://yhb1l3dykd.execute-api.us-west-2.amazonaws.com/playerinformation
 --- !u!1 &1959778687
 GameObject:
   m_ObjectHideFlags: 0

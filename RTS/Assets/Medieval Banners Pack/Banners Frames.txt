@@ -1,0 +1,34 @@
+Banner1:
+
+  - slow     : 401 à 741
+
+
+  - strong   : 0 à 341
+
+
+Banner2:
+
+
+keys: 0-167-328-371-529-557-801
+
+
+  - very slow : 44-143
+
+  - strong    : 167-327
+
+  - slow      : 371-528
+
+  - average   : 557-800
+
+
+
+
+Banner3
+
+  - strong    : 0 à 341
+
+  - Slow      : 401 à 741
+
+
+
+

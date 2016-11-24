@@ -1,13 +1,13 @@
 fileFormatVersion: 2
 guid: 68001289544e911418aca735e8ce81fe
-timeCreated: 1474712103
+timeCreated: 1479901460
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - greentile: {fileID: 170330, guid: a8e7ba359bf1f3c4c84dae0c4a539621, type: 2}
-  - destflag: {fileID: 164788, guid: 1f5ee8eb8d024e348bb2fe5e8275f3bc, type: 2}
-  - enemydestflag: {fileID: 164788, guid: 1f5ee8eb8d024e348bb2fe5e8275f3bc, type: 2}
+  - destflag: {fileID: 100016, guid: aa6f039282cd41a42bfd744ec25e383c, type: 2}
+  - enemydestflag: {fileID: 100000, guid: 9cca53a0761d9ca4ab661959d9d344b0, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

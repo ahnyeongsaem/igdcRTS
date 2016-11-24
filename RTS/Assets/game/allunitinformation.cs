@@ -91,7 +91,7 @@ public class allunitinformation : MonoBehaviour {
 	IEnumerator DownloadAndCache()
 	{
         // Wait for the Caching system to be ready
-        
+        Caching.CleanCache();
         while (!Caching.ready)
 			yield return null;
 
@@ -183,13 +183,21 @@ public class allunitinformation : MonoBehaviour {
 		((GameObject)gametmp).GetComponent<unitclass> ().attacksplashrange = Convert.ToSingle(unitstatus [i] ["attacksplashrange"]);
 		((GameObject)gametmp).GetComponent<unitclass> ().maxtrainingspeed = Convert.ToSingle(unitstatus [i] ["maxtrainingspeed"]);
 		((GameObject)gametmp).GetComponent<unitclass> ().sightrange = Convert.ToSingle(unitstatus [i] ["sightrange"]);
+        ((GameObject)gametmp).GetComponent<unitclass> ().tier = (int)unitstatus[i]["tier"];
+        if (unitstatus[i].ContainsKey("icon"))
+        {
+            ((GameObject)gametmp).GetComponent<unitclass>().icon = Resources.Load<Sprite>("icon/" + unitstatus[i]["icon"]);
+        }
+        else
+        {
+            Debug.Log("aws table not have icon" + unitstatus[i]["unitname"]);
+        }
 
-        
-		//TODO : misaleobject particle trainunitobject
-	}
+        //TODO : misaleobject particle trainunitobject
+    }
 
-	///debug all unit asset
-	void checkunitinstiate()
+    ///debug all unit asset
+    void checkunitinstiate()
 	{
 		Debug.Log ("unit ins");
 		for (int i = 0; i < AllUnit.Count; i++)

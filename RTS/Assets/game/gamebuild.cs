@@ -15,7 +15,7 @@ public class gamebuild : MonoBehaviour {
 	public GameObject destflag;
 	public GameObject enemydestflag;
 	public Vector3 destflagstartxy;
-	static public Vector3 enemydestflagstartxy =new Vector3(73,30,0);
+	static public Vector3 enemydestflagstartxy =new Vector3(73,0,30);
 	// Use this for initialization
 	void Start () {
 		for (int i = 0; i < gametile.GetLength (0); i++) {
