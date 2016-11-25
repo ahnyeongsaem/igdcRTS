@@ -5,34 +5,71 @@ using System.Collections.Generic;
 public class playerinformation : MonoBehaviour
 {
     public string playerinformationtableurl= "https://yhb1l3dykd.execute-api.us-west-2.amazonaws.com/playerinformation";
-
+    public string playerheroinformationtableurl="https://qwy8gf6zvj.execute-api.us-west-2.amazonaws.com/playerheroinformation";
     //유저의 정보 클래스
     static public int cash;
     static public int gold;
     static public string playerid="saemy90";
     static public string nickname;
-    
+
+
+    static public int status=STATUS_NOT_START;
+
+    public const int STATUS_NOT_START = 0;
+    public const int STATUS_PLAYERINFOR_END = 5;
+    public const int STATUS_HEROINFOR_START = 10;
+    public const int STATUS_HEROINFOR_END = 11;
 
     /// <summary>
     /// player가 가지고 있는 건물 정보(buildinformation)들의 배열(buildinforarray) 클래스
     /// </summary>
-    static public ArrayList buildinforarray=new ArrayList();
+    static public List<buildinformation> buildinforarray=new List<buildinformation>();
     public class buildinformation
     {
         public string name;
         public int level;
         public int count;
         public bool indeck;
-        buildinformation(string _name, int _level, int _count, bool _indeck)
+        public buildinformation(string _name, int _level, int _count, bool _indeck)
         {
             name = _name; level = _level; count = _count; indeck = _indeck;
+        }
+        public GameObject getgameobjectmodel()
+        {
+            GameObject tmp;
+            foreach (GameObject i in allunitinformation.Building)
+            {
+                if (i.name.Equals(name))
+                {
+                    tmp = i;
+
+                    return tmp;
+                }
+            }
+            Debug.LogError("allinfromation.building not have " + name);
+            return null;
+        }
+        public GameObject getgameobjecttrainingunitmodel()
+        {
+            GameObject tmp;
+            foreach (GameObject i in allunitinformation.Building)
+            {
+                if (i.name.Equals(name))
+                {
+                    tmp = i.GetComponent<unitclass>().trainunitobject;
+
+                    return tmp;
+                }
+            }
+            Debug.LogError("allinfromation.building not have " + name);
+            return null;
         }
     }
 
     /// <summary>
     /// player가 가지고 있는 영웅 정보(heroinfromation)들의 배열(buildinforarray) 클래스
     /// </summary>
-    static public ArrayList heroinforarray = new ArrayList();
+    static public List<heroinformation> heroinforarray = new List<heroinformation>();
     public class heroinformation
     {
         public string name;
@@ -70,8 +107,9 @@ public class playerinformation : MonoBehaviour
     /// </summary>
     void dummyinit()
     {
-        heroinforarray.Add(new heroinformation("hero_bladeGirl", 1, 0, 0, 0));
-        heroinforarray.Add(new heroinformation("hero_bladeMan", 1, 0, 0, 0));
+        buildinforarray.Add(new buildinformation("building_castle",1,1,true));
+        //heroinforarray.Add(new heroinformation("hero_bladeGirl", 1, 0, 0, 0));
+        //heroinforarray.Add(new heroinformation("hero_bladeMan", 1, 0, 0, 0));
     }
 
 
@@ -104,22 +142,23 @@ public class playerinformation : MonoBehaviour
             }
             
             Dictionary<string,object>[] playerinformationtable = (Dictionary<string, object>[])dicjson["Items"];
-            cash = int.Parse((string)playerinformationtable[0]["cash"]);
-            gold = int.Parse((string)playerinformationtable[0]["gold"]);
+            cash = (int)playerinformationtable[0]["cash"];
+            gold = (int)playerinformationtable[0]["gold"];
             nickname = (string)playerinformationtable[0]["nickname"];
-        
+
+
+            status = STATUS_PLAYERINFOR_END;
         }
         else
         {
-            Debug.Log("WWW Error: " + www.error);
+            Debug.LogError("WWW Error: " + www.error);
         }
     }
-    private IEnumerator playerherodownload(string url)
+    private IEnumerator playerheroinfordownload(string url)
     {
         Dictionary<string, object> dic = new Dictionary<string, object>();
         dic.Add("playerid", playerid);
         string data = jsonf.Write(dic);
-
         Dictionary<string, string> header = new Dictionary<string, string>();
         header.Add("Content-Type", "text/json");
         header.Add("Content-Length", "" + data.Length);
@@ -137,27 +176,50 @@ public class playerinformation : MonoBehaviour
             Dictionary<string, object> dicjson;
             dicjson = jsonf.Read(wwwstring);
             Debug.Log("" + dicjson);
-            Dictionary<string, object>[] playerinformationtable = (Dictionary<string, object>[])dicjson["Items"];
-            cash = int.Parse((string)playerinformationtable[0]["cash"]);
-            gold = int.Parse((string)playerinformationtable[0]["gold"]);
-            nickname = (string)playerinformationtable[0]["nickname"];
 
+            if (int.Parse(dicjson["Count"].ToString()) == 0)
+            {
+                Debug.LogError("todo : error in count 0");
+            }
+
+            Dictionary<string, object>[] playerinformationtable = (Dictionary<string, object>[])dicjson["Items"];
+            
+            for(int i=0;i<playerinformationtable.Length;i++)
+            {
+                heroinforarray.Add(new heroinformation(
+                    (string)playerinformationtable[i]["name"],
+                    (int)playerinformationtable[i]["level"],
+                    (int)playerinformationtable[i]["totalexp"],
+                    (int)playerinformationtable[i]["grade"],
+                    (int)playerinformationtable[i]["decknumber"]));
+            }
+            
+            //cash = (int)playerinformationtable[0]["cash"];
+            //gold = (int)playerinformationtable[0]["gold"];
+            //nickname = (string)playerinformationtable[0]["nickname"];
+
+
+            status = STATUS_HEROINFOR_END;
         }
         else
         {
-            Debug.Log("WWW Error: " + www.error);
+            Debug.LogError("WWW Error: " + www.error);
         }
     }
     // Use this for initialization
     void Start()
     {
         StartCoroutine(playerinfordownload(playerinformationtableurl));
-        
+        dummyinit(); //TODO :delete need
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(allunitinformation.status==allunitinformation.STATUS_FINISH_WORK && status==STATUS_PLAYERINFOR_END)
+        {
+            status = STATUS_HEROINFOR_START;
+            StartCoroutine(playerheroinfordownload(playerheroinformationtableurl));
+        }
     }
 }

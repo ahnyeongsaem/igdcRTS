@@ -105,7 +105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &64570893
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -157,6 +157,7 @@ MonoBehaviour:
   tier: 0
   misaleobject: {fileID: 174736, guid: 35ec82bcf1e8da843af8d2eebf56ee90, type: 2}
   trainunitobject: {fileID: 0}
+  trainunitobjectname: 
   icon: {fileID: 0}
 --- !u!114 &64570895
 MonoBehaviour:
@@ -400,8 +401,6 @@ MonoBehaviour:
     Enable: 0
     AllowOwnTeamBlockers: 0
   Entities:
-  - {fileID: 717185338}
-  - {fileID: 64570895}
   - {fileID: 1671241713}
   AnimatingEntities: []
 --- !u!4 &331842709
@@ -584,7 +583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &717185336
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -636,6 +635,7 @@ MonoBehaviour:
   tier: 0
   misaleobject: {fileID: 174736, guid: 35ec82bcf1e8da843af8d2eebf56ee90, type: 2}
   trainunitobject: {fileID: 0}
+  trainunitobjectname: 
   icon: {fileID: 0}
 --- !u!114 &717185338
 MonoBehaviour:
@@ -1031,6 +1031,7 @@ MonoBehaviour:
   tier: 0
   misaleobject: {fileID: 174736, guid: 35ec82bcf1e8da843af8d2eebf56ee90, type: 2}
   trainunitobject: {fileID: 0}
+  trainunitobjectname: 
   icon: {fileID: 0}
 --- !u!195 &1671241719
 NavMeshAgent:

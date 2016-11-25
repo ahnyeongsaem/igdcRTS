@@ -8,14 +8,21 @@ public class allunitinformation : MonoBehaviour {
 	public string BundleURL="https://s3.ap-northeast-2.amazonaws.com/igurs-rts/assetBundle/unit.unity3d";
 	public string unitTableURL="https://quuqawenjj.execute-api.us-west-2.amazonaws.com/unitclass";
 	public int version = 1;
-	static public ArrayList Unit=new ArrayList();
-	static public ArrayList Building =new ArrayList();
-	static public ArrayList Hero =new ArrayList(); //Hero
-	static public ArrayList AllUnit =new ArrayList(); //모든 유닛
+	static public List<GameObject> Unit=new List<GameObject>();
+	static public List<GameObject> Building =new List<GameObject>();
+	static public List<GameObject> Hero =new List<GameObject>(); //Hero
+	static public List<GameObject> AllUnit =new List<GameObject>(); //모든 유닛
 	public static GameObject gametmp;
 
+    public const int STATUS_NOT_START = 0;
+    public const int STATUS_ALLUNITINFOR_END = 5;
 
-	static Dictionary<string,object>[] unitstatus;
+    public const int STATUS_FINISH_WORK = 100;
+
+    static public int status = STATUS_NOT_START;
+    
+
+    static Dictionary<string,object>[] unitstatus;
 
 	void Start()
 	{
@@ -25,18 +32,18 @@ public class allunitinformation : MonoBehaviour {
 	public static GameObject getGameObject(string unitname)
 	{
 		for (int i = 0; i < Unit.Count; i++) {
-			if (((GameObject)Unit[i]).GetComponent<unitclass> ().unitname == unitname) {
-				return ((GameObject)Unit[i]);
+			if (Unit[i].GetComponent<unitclass> ().unitname == unitname) {
+				return Unit[i];
 			}
 		}
 		for (int i = 0; i < Building.Count; i++) {
-			if (((GameObject)Building[i]).GetComponent<unitclass> ().unitname == unitname) {
-				return ((GameObject)Unit[i]);
+			if (Building[i].GetComponent<unitclass> ().unitname == unitname) {
+				return Unit[i];
 			}
 		}
 		for (int i = 0; i < Hero.Count; i++) {
-			if (((GameObject)Hero[i]).GetComponent<unitclass> ().unitname == unitname) {
-				return ((GameObject)Unit[i]);
+			if (Hero[i].GetComponent<unitclass> ().unitname == unitname) {
+				return Unit[i];
 			}
 		}
 		return null;
@@ -79,13 +86,15 @@ public class allunitinformation : MonoBehaviour {
 
 			
 
-			Debug.Log("userstatus down complete -> assetbundle down start");
+			Debug.Log("unit infor down complete -> assetbundle down start");
+
+            status = STATUS_ALLUNITINFOR_END;
 			StartCoroutine(DownloadAndCache());
 
 
 		} else {
 			Debug.Log("WWW Error: "+ www.error);
-		}    
+		}
 	}
 
 	IEnumerator DownloadAndCache()
@@ -110,6 +119,7 @@ public class allunitinformation : MonoBehaviour {
 
 			for (int i = 0; i < unitstatus.Length; i++) {
 				if (unitstatus [i] ["unitname"] == null) {
+                    Debug.LogError(i + "unitname is null");
 					//TODO : if unitname =null
 				} else {
                     //gametmp = (GameObject)(bundle.LoadAsset (unitstatus [i] ["unitname"].ToString ()));
@@ -118,7 +128,7 @@ public class allunitinformation : MonoBehaviour {
                     {
                         tmpsssss += bundle.GetAllAssetNames()[j];
                     }
-                    Debug.Log(tmpsssss);
+
                     AssetBundleRequest abr= bundle.LoadAssetAsync(unitstatus[i]["unitname"].ToString(),typeof(GameObject));
                     yield return abr;
                     gametmp = abr.asset as GameObject;
@@ -136,21 +146,48 @@ public class allunitinformation : MonoBehaviour {
 						Hero.Add(AllUnit[i]);
 					} 
 					else {
-						Debug.LogError ("whatobject");
-						//TODO : error
+						Debug.LogError ("whatobject not hero,unit,building ="+ unitstatus[i]["unitname"].ToString());
+
 					}
 
 				}
-			
-				// Unload the AssetBundles compressed contents to conserve memory
 
+                //end for i
 			}
+            for(int i=0;i<AllUnit.Count;i++)
+            {
+                if(AllUnit[i].GetComponent<unitclass>().trainunitobjectname!=null &&
+                    AllUnit[i].GetComponent<unitclass>().trainunitobjectname.Length >2)
+                {
+                    string tmp = AllUnit[i].GetComponent<unitclass>().trainunitobjectname;
+                    int j;
+                    for (j=0;j<Unit.Count;j++)
+                    {
+                        if(tmp.Equals(Unit[j].GetComponent<unitclass>().unitname))
+                        {
+                            AllUnit[i].GetComponent<unitclass>().trainunitobject = Unit[j];
+                            break;
+                        }
+                        
+                    }
+                    if(j==Unit.Count && Unit.Count!=0)
+                    {
+                        Debug.LogError("trainunit Allunit" + i + "," + tmp + "not have in unit[]");
+                    }
+                }
+            }
+            
+            
 			bundle.Unload (false);
             www.Dispose();
-		} // memory is freed from the web stream (www.Dispose() gets called implicitly)
+
+
+
+            status = STATUS_FINISH_WORK;
+        } // memory is freed from the web stream (www.Dispose() gets called implicitly)
         
 //		copyallunitclass ();
-		checkunitinstiate ();
+		checkunitinstiate (); //TODO : DELETE
 	}
 	void copyallunitclass(int i)
 	{
@@ -161,12 +198,22 @@ public class allunitinformation : MonoBehaviour {
             return;
         }
 		gametmp.AddComponent<unitclass>();
-		gametmp.AddComponent <NavMeshAgent>();
+		
 		gametmp.AddComponent <LOSEntity>();
 
-		gametmp.GetComponent<unitclass> ().unitname = (string)unitstatus [i] ["unitname"];
+		gametmp.name=gametmp.GetComponent<unitclass> ().unitname = (string)unitstatus [i] ["unitname"];
 		gametmp.GetComponent<unitclass> ().unittype = 
 			(unitclass.Unittype) Enum.Parse(typeof(unitclass.Unittype),(string)unitstatus [i] ["unittype"], true);
+
+        if(gametmp.GetComponent<unitclass>().unittype==unitclass.Unittype.building)
+        {
+            gametmp.AddComponent<NavMeshObstacle>();
+        }
+        else
+        {
+            gametmp.AddComponent<NavMeshAgent>();
+        }
+        
 		gametmp.GetComponent<unitclass> ().movetype = 
 			(unitclass.Movetype) Enum.Parse(typeof(unitclass.Movetype),(string)unitstatus [i] ["movetype"], true);
 		gametmp.GetComponent<unitclass> ().attacktarget = 
@@ -184,23 +231,27 @@ public class allunitinformation : MonoBehaviour {
 		gametmp.GetComponent<unitclass> ().maxtrainingspeed = Convert.ToSingle(unitstatus [i] ["maxtrainingspeed"]);
 		gametmp.GetComponent<unitclass> ().sightrange = Convert.ToSingle(unitstatus [i] ["sightrange"]);
         gametmp.GetComponent<unitclass> ().tier = (int)unitstatus[i]["tier"];
-        if (unitstatus[i].ContainsKey("icon"))
-        {
+        if (unitstatus[i].ContainsKey("icon")){
             gametmp.GetComponent<unitclass>().icon = Resources.Load<Sprite>("icon/" + unitstatus[i]["icon"]);
         }
-        else
-        {
+        else{
             Debug.Log("aws table not have icon" + unitstatus[i]["unitname"]);
         }
-        if (unitstatus[i].ContainsKey("misaleobject"))
-        {
+        if (unitstatus[i].ContainsKey("misaleobject")){
             gametmp.GetComponent<unitclass>().misaleobject = Resources.Load("misale/" + unitstatus[i]["misaleobject"],typeof(GameObject)) as GameObject;
         }
-        else
-        {
-            Debug.Log("aws table not have icon" + unitstatus[i]["unitname"]);
+        else{
+            Debug.Log("aws table not have misaleobject" + unitstatus[i]["unitname"]);
         }
-        //TODO : trainunitobject
+        if (unitstatus[i].ContainsKey("trainunitobject")){
+            gametmp.GetComponent<unitclass>().trainunitobjectname = (string)unitstatus[i]["trainunitobject"];
+        }
+        else{
+            Debug.Log("aws table not have trainunitobject" + unitstatus[i]["unitname"]);
+            gametmp.GetComponent<unitclass>().trainunitobjectname = null;
+        }
+
+        
     }
 
     ///debug all unit asset
@@ -208,7 +259,7 @@ public class allunitinformation : MonoBehaviour {
 	{
 		Debug.Log ("unit ins");
 		for (int i = 0; i < AllUnit.Count; i++)
-			Instantiate ((GameObject)AllUnit [i]);
+			Instantiate (AllUnit [i]);
 	}
 
 }

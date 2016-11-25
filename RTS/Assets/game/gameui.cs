@@ -16,6 +16,6 @@ public class gameui : MonoBehaviour {
 
 	public void buildclicktest()
 	{
-		GetComponent<gamebuild> ().setting (buildingtest, new Vector2 (2, 3));
+		GetComponent<gamebuild> ().setting (playerinformation.buildinforarray[0].getgameobjectmodel(), new Vector2 (2, 3));
 	}
 }

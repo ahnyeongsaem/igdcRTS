@@ -53,6 +53,7 @@ public class unitclass : MonoBehaviour {
 
 	public GameObject misaleobject;
 	public GameObject trainunitobject;
+    public string trainunitobjectname;
 
     public Sprite icon;
 
@@ -77,6 +78,7 @@ public class unitclass : MonoBehaviour {
 			agent.acceleration = 20;
 		}
 		attackspeednow = attackspeed;
+        
 	}
 
 	// Update is called once per frame
