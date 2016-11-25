@@ -69,15 +69,15 @@ public class allunitinformation : MonoBehaviour {
 		// check for errors
 		if (www.error == null)
 		{
-			Debug.Log("WWW Ok!: " + www.text);
+			//Debug.Log("WWW Ok!: " + www.text);
 			string wwwstring = www.text;//.Replace("//","");
-			Debug.Log("Parsing : " +wwwstring);
+			//Debug.Log("Parsing : " +wwwstring);
 			Dictionary<string, object> dicjson;
 
 			dicjson = jsonf.Read (wwwstring);
 
 
-			Debug.Log (""+dicjson);
+			//Debug.Log (""+dicjson);
 			Debug.Log ((string)dicjson ["body"]);
 			Dictionary<string,object> aa;
 			aa = jsonf.Read((string)dicjson["body"]);
@@ -182,7 +182,7 @@ public class allunitinformation : MonoBehaviour {
             www.Dispose();
 
 
-
+            Debug.Log("assetdown finish");
             status = STATUS_FINISH_WORK;
         } // memory is freed from the web stream (www.Dispose() gets called implicitly)
         
@@ -197,6 +197,7 @@ public class allunitinformation : MonoBehaviour {
             Debug.LogError("nullpointexception object indexnumber = "+i+"unitname = "+ (string)unitstatus[i]["unitname"]);
             return;
         }
+        gametmp.tag = "Untagged";
 		gametmp.AddComponent<unitclass>();
 		
 		gametmp.AddComponent <LOSEntity>();

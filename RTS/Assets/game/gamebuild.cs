@@ -113,7 +113,8 @@ public class gamebuild : MonoBehaviour {
 							if (buildobject.GetComponent<LOSEntity> ().RevealState != LOSEntity.RevealStates.Unfogged || gametile [(int)(Mathf.Floor (hit.point.x) + i), (int)(Mathf.Floor (hit.point.z) + j)] == 1) {
 
 								buildtile [i, j].GetComponentInChildren<MeshRenderer> ().material.color = Color.red;
-								Debug.Log(""+(int)Mathf.Floor (hit.point.x) + i+" "+(int)Mathf.Floor (hit.point.z) + j+" "+gametile [(int)(Mathf.Floor (hit.point.x) + i), (int)(Mathf.Floor (hit.point.z) + j)]);
+								Debug.Log(""+(int)Mathf.Floor (hit.point.x)+", i is" + i+" "+(int)Mathf.Floor (hit.point.z) + ", j is" + j+" "+gametile [(int)(Mathf.Floor (hit.point.x) + i), (int)(Mathf.Floor (hit.point.z) + j)]
+                                    + buildobject.GetComponent<LOSEntity>().RevealState + " ");
 							} else if (tmpbool == 1) {
 								buildtile [i, j].GetComponentInChildren<MeshRenderer> ().material.color = Color.red;
 							}
@@ -126,7 +127,11 @@ public class gamebuild : MonoBehaviour {
 								new Vector3 (Mathf.Floor (hit.point.x) + i, 0f, Mathf.Floor (hit.point.z) + j);
 						}
 					}
-					if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonUp(0) && ctflag==(int)(buildsize.x*buildsize.y) ) {//건물조건
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        Debug.Log(EventSystem.current.IsPointerOverGameObject() + " " + ctflag + " "+buildsize.x+ " "+buildsize.y);
+                    }
+					if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonUp(0) && ctflag==(int)buildsize.x*(int)buildsize.y ) {//건물조건
 						for (int i = 0; i < buildtile.GetLength (0); i++) {
 							for (int j = 0; j < buildtile.GetLength (1); j++) {
 								gametile [(int)(Mathf.Floor (hit.point.x) + i), (int)(Mathf.Floor (hit.point.z) + j)] = 1;
