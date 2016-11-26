@@ -69,6 +69,21 @@ public class playerinformation : MonoBehaviour
             Debug.LogError("allinfromation.building not have " + name);
             return null;
         }
+        public Sprite getspritebuildmodel()
+        {
+            Sprite tmp;
+            foreach (GameObject i in allunitinformation.Building)
+            {
+                if (i.name.Equals(name))
+                {
+                    tmp = i.GetComponent<unitclass>().icon;
+
+                    return tmp;
+                }
+            }
+            Debug.LogError("allinfromation.building not have " + name);
+            return null;
+        }
     }
 
     /// <summary>
@@ -259,6 +274,7 @@ public class playerinformation : MonoBehaviour
 
 
             status = STATUS_BUILDINGINFOR_END;
+            Debug.Log("building infor end");
         }
         else
         {

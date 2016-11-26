@@ -1239,6 +1239,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerinformationtableurl: https://yhb1l3dykd.execute-api.us-west-2.amazonaws.com/playerinformation
+  playerheroinformationtableurl: https://qwy8gf6zvj.execute-api.us-west-2.amazonaws.com/playerheroinformation
+  playerbuildinginfromationtableurl: https://vqeazgbatk.execute-api.us-west-2.amazonaws.com/playerbuildinginformation
 --- !u!1 &1959778687
 GameObject:
   m_ObjectHideFlags: 0
