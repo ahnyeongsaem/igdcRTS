@@ -112,7 +112,7 @@ public class playerinformation : MonoBehaviour
             {
                 if(i.name.Equals(name))
                 {
-                    tmp = Instantiate(i);
+                    tmp = i;
 
                     return tmp;
                 }
@@ -120,7 +120,23 @@ public class playerinformation : MonoBehaviour
             Debug.LogError("allinfromation.hero not have "+name);
             return null;
         }
-        
+
+        public Sprite getspriteheromodel()
+        {
+            Sprite tmp;
+            foreach (GameObject i in allunitinformation.Hero)
+            {
+                if (i.name.Equals(name))
+                {
+                    tmp = i.GetComponent<unitclass>().icon;
+
+                    return tmp;
+                }
+            }
+            Debug.LogError("allinfromation.hero not have " + name);
+            return null;
+        }
+
     }
     /// <summary>
     /// only dummy TODO : 나중에 인터넷다운로드로 대체 필요
