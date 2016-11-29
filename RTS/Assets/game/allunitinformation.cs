@@ -51,7 +51,7 @@ public class allunitinformation : MonoBehaviour {
 	/// unitclass check and make
 	public void allunitsetting()
 	{
-		WWW results = GET(unitTableURL);
+		GET(unitTableURL);
         
 	}
 	public WWW GET(string url)
@@ -232,19 +232,22 @@ public class allunitinformation : MonoBehaviour {
 		gametmp.GetComponent<unitclass> ().maxtrainingspeed = Convert.ToSingle(unitstatus [i] ["maxtrainingspeed"]);
 		gametmp.GetComponent<unitclass> ().sightrange = Convert.ToSingle(unitstatus [i] ["sightrange"]);
         gametmp.GetComponent<unitclass> ().tier = (int)unitstatus[i]["tier"];
-        if (unitstatus[i].ContainsKey("icon")){
+        if (unitstatus[i].ContainsKey("icon") && unitstatus[i].ContainsKey("icon").ToString().Length>2)
+        {
             gametmp.GetComponent<unitclass>().icon = Resources.Load<Sprite>("icon/" + unitstatus[i]["icon"]);
         }
         else{
             Debug.Log("aws table not have icon" + unitstatus[i]["unitname"]);
         }
-        if (unitstatus[i].ContainsKey("misaleobject")){
+        if (unitstatus[i].ContainsKey("misaleobject") && unitstatus[i].ContainsKey("misaleobject").ToString().Length>2)
+        {
             gametmp.GetComponent<unitclass>().misaleobject = Resources.Load("misale/" + unitstatus[i]["misaleobject"],typeof(GameObject)) as GameObject;
         }
         else{
             Debug.Log("aws table not have misaleobject" + unitstatus[i]["unitname"]);
         }
-        if (unitstatus[i].ContainsKey("trainunitobject")){
+        if (unitstatus[i].ContainsKey("trainunitobject") && unitstatus[i].ContainsKey("trainunitobject").ToString().Length>2)
+        {
             gametmp.GetComponent<unitclass>().trainunitobjectname = (string)unitstatus[i]["trainunitobject"];
         }
         else{

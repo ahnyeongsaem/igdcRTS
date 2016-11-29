@@ -95,7 +95,7 @@ public class unitclass : MonoBehaviour {
                 //자기 객체의 생산속도는 자기가 건물일때 생산속도지 유닛의 생산속도가 아닙니다. 유닛일경우 trainingspeed를 0으로 해주세요.
 				if (tag == "PLAYER")
 					trainunitobject.tag = "PLAYER";
-				else
+				else if(tag=="ENEMY")
 					trainunitobject.tag = "ENEMY";
 				Instantiate<GameObject> (trainunitobject).transform.position=transform.position;
 			}
@@ -108,7 +108,7 @@ public class unitclass : MonoBehaviour {
 
 		//search
 		int searchenemy=0; //if nearbyenemy sightrange 
-		GameObject[] enemys;
+        GameObject[] enemys = { };
 		if (tag == "PLAYER") {
 			enemys = GameObject.FindGameObjectsWithTag ("ENEMY");
 			GetComponent<LOSEntity> ().IsRevealer = true;
@@ -174,8 +174,12 @@ public class unitclass : MonoBehaviour {
 			if (targetenemy != null) {
 				if (speed != 0) {
 					agent.SetDestination (targetenemy.transform.position);
-
-					agent.Resume ();
+                    if (GetComponent<Animator>() != null)
+                    {
+                        //animatorneed
+                        GetComponent<Animator>().SetInteger("animation", 1);
+                    }
+                    agent.Resume ();
 				}
 			}
 	

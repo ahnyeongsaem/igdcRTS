@@ -17,6 +17,7 @@ public class playerinformation : MonoBehaviour
     static public int status=STATUS_NOT_START;
 
     public const int STATUS_NOT_START = 0;
+    public const int STATUS_PLAYERINFOR_START = 4;
     public const int STATUS_PLAYERINFOR_END = 5;
 
     public const int STATUS_HEROINFOR_START = 10;
@@ -34,8 +35,8 @@ public class playerinformation : MonoBehaviour
         public string name;
         public int level;
         public int count;
-        public bool indeck;
-        public buildinformation(string _name, int _level, int _count, bool _indeck)
+        public int indeck;
+        public buildinformation(string _name, int _level, int _count, int _indeck)
         {
             name = _name; level = _level; count = _count; indeck = _indeck;
         }
@@ -94,12 +95,12 @@ public class playerinformation : MonoBehaviour
     {
         public string name;
         public int level;
-        public int totalexp; //경험치
+        public int exp; //경험치
         public int grade; //영웅 합칠경우
         public int decknumber; //0이면 안들어가있는것
-        public heroinformation(string _name, int _level, int _totalexp, int _grade, int _decknumber)
+        public heroinformation(string _name, int _level, int _exp, int _grade, int _decknumber)
         {
-            name = _name; level = _level; totalexp = _totalexp; grade = _grade; decknumber = _decknumber;
+            name = _name; level = _level; exp = _exp; grade = _grade; decknumber = _decknumber;
         }
         /// <summary>
         /// getgameobjectmodel only model(not change information)
@@ -143,7 +144,7 @@ public class playerinformation : MonoBehaviour
     /// </summary>
     void dummyinit()
     {
-        buildinforarray.Add(new buildinformation("building_castle",1,1,true));
+        buildinforarray.Add(new buildinformation("building_castle",1,1,1));
         heroinforarray.Add(new heroinformation("hero_bladeGirl", 1, 0, 0, 0));
         heroinforarray.Add(new heroinformation("hero_bladeMan", 1, 0, 0, 0));
     }
@@ -182,7 +183,7 @@ public class playerinformation : MonoBehaviour
             gold = (int)playerinformationtable[0]["gold"];
             nickname = (string)playerinformationtable[0]["nickname"];
 
-
+            Debug.Log("playerinfor end");
             status = STATUS_PLAYERINFOR_END;
         }
         else
@@ -190,6 +191,71 @@ public class playerinformation : MonoBehaviour
             Debug.LogError("WWW Error: " + www.error);
         }
     }
+    private IEnumerator playerinfor2download(string url)
+    {
+        Dictionary<string, object> dic = new Dictionary<string, object>();
+        dic.Add("playerid", playerid);
+        string data = jsonf.Write(dic);
+        Dictionary<string, string> header = new Dictionary<string, string>();
+        header.Add("Content-Type", "text/json");
+        header.Add("Content-Length", "" + data.Length);
+        var encoding = new System.Text.UTF8Encoding();
+        WWW www = new WWW(url, encoding.GetBytes(data), header);
+
+        yield return www;
+
+        // check for errors
+        if (www.error == null)
+        {
+            Debug.Log("WWW Ok!: " + www.text);
+            string wwwstring = www.text;//.Replace("//","");
+            Debug.Log("Parsing : " + wwwstring);
+            Dictionary<string, object> dicjson;
+            dicjson = jsonf.Read(wwwstring);
+            Debug.Log("" + dicjson);
+
+            if (int.Parse(dicjson["Count"].ToString()) == 0)
+            {
+                Debug.LogError("todo : error in count 0");
+            }
+
+            Dictionary<string, object>[] playerinformationtable = (Dictionary<string, object>[])dicjson["Items"];
+            cash = (int)playerinformationtable[0]["cash"];
+            gold = (int)playerinformationtable[0]["gold"];
+            nickname = (string)playerinformationtable[0]["nickname"];
+            
+            Dictionary<string,object>[] playerbuildinginformationtable =
+                (Dictionary<string, object>[])playerinformationtable[0]["build"];
+            for (int i = 0; i < playerbuildinginformationtable.Length; i++)
+            {
+                buildinforarray.Add(new buildinformation(
+                    (string)playerbuildinginformationtable[i]["name"],
+                    (int)playerbuildinginformationtable[i]["level"],
+                    (int)playerbuildinginformationtable[i]["count"],
+                    (int)playerbuildinginformationtable[i]["indeck"]));
+            }
+
+            Dictionary<string, object>[] playerheroinformationtable =
+                (Dictionary<string, object>[])playerinformationtable[0]["hero"];
+            for (int i = 0; i < playerheroinformationtable.Length; i++)
+            {
+                heroinforarray.Add(new heroinformation(
+                    (string)playerheroinformationtable[i]["name"],
+                    (int)playerheroinformationtable[i]["level"],
+                    (int)playerheroinformationtable[i]["exp"],
+                    (int)playerheroinformationtable[i]["grade"],
+                    (int)playerheroinformationtable[i]["decknumber"]));
+            }
+
+            Debug.Log("playerinfor2 end");
+            status = STATUS_PLAYERINFOR_END;
+        }
+        else
+        {
+            Debug.LogError("WWW Error: " + www.error);
+        }
+    }
+    /* playerheroinfordownload
     private IEnumerator playerheroinfordownload(string url)
     {
         status = STATUS_HEROINFOR_START;
@@ -244,6 +310,8 @@ public class playerinformation : MonoBehaviour
             Debug.LogError("WWW Error: " + www.error);
         }
     }
+    */
+    /* playerbuildinginfordownload
     private IEnumerator playerbuildinginfordownload(string url)
     {
         status = STATUS_BUILDINGINFOR_START;
@@ -297,22 +365,33 @@ public class playerinformation : MonoBehaviour
             Debug.LogError("WWW Error: " + www.error);
         }
     }
-
+    */
 
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(playerinfordownload(playerinformationtableurl));
+        //StartCoroutine(playerinfor2download(playerinformationtableurl));
        // dummyinit(); //TODO :delete need
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         if(allunitinformation.status==allunitinformation.STATUS_FINISH_WORK && status==STATUS_PLAYERINFOR_END)
         {
             status = STATUS_HEROINFOR_START;
+            Debug.Log("heroinfor start");
             StartCoroutine(playerheroinfordownload(playerheroinformationtableurl));
+            
+        }
+        */
+        if (allunitinformation.status == allunitinformation.STATUS_FINISH_WORK 
+            && status == STATUS_NOT_START)
+        {
+            status = STATUS_PLAYERINFOR_START;
+            Debug.Log("playerinfor2 start");
+            StartCoroutine(playerinfor2download(playerinformationtableurl));
         }
     }
 }
