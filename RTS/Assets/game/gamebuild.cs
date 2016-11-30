@@ -4,10 +4,14 @@ using UnityEngine.EventSystems;
 
 public class gamebuild : MonoBehaviour {
 
+    public const int PLAYER_UNIT_COUNT_MAX = 50;
+    public const int ENEMY_UNIT_COUNT_MAX = 50;
+    public static int playerunitcount = 0;
+    public static int enemyunitcount = 0;
+
 	public int[,] gametile=new int[26,42]; //0이면 빈칸 1이면 차있는칸 2면 자원
 	GameObject buildobject=null;
 	public GameObject greentile;
-
 
 	public GameObject[,] buildtile=null; //x,y
 	Vector2 buildsize=new Vector2();
@@ -64,6 +68,34 @@ public class gamebuild : MonoBehaviour {
 
 	}
 
+    public static int playerunitcountadd(int tier)
+    {
+        if(tier==1 && PLAYER_UNIT_COUNT_MAX>=playerunitcount+1)
+        {
+            playerunitcount += 1;
+        }
+        else if (tier == 2 && PLAYER_UNIT_COUNT_MAX >= playerunitcount + 2)
+        {
+            playerunitcount += 2;
+        }
+        else if (tier == 3 && PLAYER_UNIT_COUNT_MAX >= playerunitcount + 3)
+        {
+            playerunitcount += 3;
+        }
+        else if (tier == 3 && PLAYER_UNIT_COUNT_MAX >= playerunitcount + 3)
+        {
+            playerunitcount += 3;
+        }
+        else if(tier !=1 && tier !=2 && tier!=3 && tier!=4)
+        {
+            Debug.Log("max unit count");
+            return 0;
+        }
+
+        //tier is wrong
+        Debug.LogError("tier = " + tier);
+        return -1;
+    }
 
 	void Update () {
 
