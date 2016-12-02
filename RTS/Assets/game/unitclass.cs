@@ -97,7 +97,8 @@ public class unitclass : MonoBehaviour {
 					trainunitobject.tag = "PLAYER";
 				else if(tag=="ENEMY")
 					trainunitobject.tag = "ENEMY";
-				Instantiate<GameObject> (trainunitobject).transform.position=transform.position;
+                if ( (tag == "PLAYER" || tag == "ENEMY") && gamebuild.playerunitcountadd(tier) > 0)
+				    Instantiate<GameObject> (trainunitobject).transform.position=transform.position;
 			}
 		}
 
@@ -210,6 +211,11 @@ public class unitclass : MonoBehaviour {
 
 
 	}
+    public void OnDestroy()
+    {
+        if(unittype==Unittype.unit && tag=="PLAYER")
+            gamebuild.playerunitcountremove(tier);
+    }
 
 	public void ApplyDamege(int damege)
 	{

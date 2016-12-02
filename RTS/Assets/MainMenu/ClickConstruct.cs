@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 
 
 public class ClickConstruct : MonoBehaviour {
@@ -13,8 +13,15 @@ public class ClickConstruct : MonoBehaviour {
     private bool check = false;                 // 카메라 건물로 근접할 것인가.
     private bool ESCcheck = false;              // ESC를 눌러서 카메라를 처음 위치로 당길 것인가
     private bool isClose = false;
+
+    private GameObject whatTarget;
+
     public changeScene change;
 
+    public GameObject Panel;
+    public GameObject GameStart_Text;
+    public GameObject Sumon_Text;
+    public GameObject Deck_Text;
     // Use this for initialization
     void Start()
     {
@@ -29,6 +36,7 @@ public class ClickConstruct : MonoBehaviour {
         {
             RaycastHit hitInfo = new RaycastHit();
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+            whatTarget = hitInfo.transform.gameObject;
             if (hit)
             {
                 // 건물을 클릭했다.
@@ -86,10 +94,19 @@ public class ClickConstruct : MonoBehaviour {
                 // 카메라가 건물로 근접하는 것이 끝났다.
                 if(Vector3.Distance(this.transform.position,target) < 0.5)
                 {
+                    if (whatTarget.name == "Gamestart")
+                        GameStart_Text.gameObject.SetActive(true);
+                    else if (whatTarget.name == "Sumon")
+                        Sumon_Text.gameObject.SetActive(true);
+                    else if (whatTarget.name == "Deck")
+                        Deck_Text.gameObject.SetActive(true); ;
+                    Panel.gameObject.SetActive(false);
                     // 카메라 근접과 처음으로 당기는 것이 같이 돌아가는 경우가 있음을 방지
                     check = false;
                     ESCcheck = false;
                     isClose = true;
+
+                    
                 }
                 else
                 {
@@ -106,6 +123,13 @@ public class ClickConstruct : MonoBehaviour {
             ESCcheck = true;
             check = false;
             isClose = false;
+
+            if (whatTarget.name == "Gamestart")
+                GameStart_Text.gameObject.SetActive(false);
+            else if (whatTarget.name == "Sumon")
+                Sumon_Text.gameObject.SetActive(false);
+            else if (whatTarget.name == "Deck")
+                Deck_Text.gameObject.SetActive(false); ;
         }
 
         // 카메라를 처음으로 당기는 것
@@ -115,7 +139,8 @@ public class ClickConstruct : MonoBehaviour {
             this.transform.position = Vector3.SmoothDamp(this.transform.position, RollBack, ref velocity, smoothTime);
             // 당기는 것을 끝냈다.
             if (Vector3.Distance(this.transform.position, RollBack) < 0.5)
-            { 
+            {
+                Panel.gameObject.SetActive(true);
                 ESCcheck = false;
             }
         }

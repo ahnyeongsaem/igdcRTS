@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
 
 public class gamebuild : MonoBehaviour {
 
-    public const int PLAYER_UNIT_COUNT_MAX = 50;
-    public const int ENEMY_UNIT_COUNT_MAX = 50;
+    public const int PLAYER_UNIT_COUNT_MAX = 40;
+ //   public const int ENEMY_UNIT_COUNT_MAX = 50;
+    public static Text unitcounttext=null;
     public static int playerunitcount = 0;
     public static int enemyunitcount = 0;
 
@@ -33,7 +35,10 @@ public class gamebuild : MonoBehaviour {
 		enemydestflag=Instantiate<GameObject> (enemydestflag);
 		enemydestflag.transform.position = enemydestflagstartxy;
 		enemydestflag.name = "enemydestflag";
-	}
+
+        unitcounttext = GameObject.Find("unitCountText").GetComponent<Text>();
+
+    }
 	
 	// Update is called once per frame
 	public void setting(GameObject bdobject, Vector2 bdsize )
@@ -68,28 +73,65 @@ public class gamebuild : MonoBehaviour {
 
 	}
 
+    public static int playerunitcountremove(int tier)
+    {
+        if (tier == 1)
+        {
+            playerunitcount -= 1;
+            unitcounttext.text = playerunitcount + " / " + PLAYER_UNIT_COUNT_MAX;
+            return 1;
+        }
+        else if (tier == 2)
+        {
+            playerunitcount -= 2;
+            unitcounttext.text = playerunitcount + " / " + PLAYER_UNIT_COUNT_MAX;
+            return 1;
+        }
+        else if (tier == 3)
+        {
+            playerunitcount -= 3;
+            unitcounttext.text = playerunitcount + " / " + PLAYER_UNIT_COUNT_MAX;
+            return 1;
+        }
+        else if (tier == 4)
+        {
+            playerunitcount -= 4;
+            unitcounttext.text = playerunitcount + " / " + PLAYER_UNIT_COUNT_MAX;
+            return 1;
+        }
+        Debug.LogError("tier = " + tier);
+        return -1;
+    }
     public static int playerunitcountadd(int tier)
     {
         if(tier==1 && PLAYER_UNIT_COUNT_MAX>=playerunitcount+1)
         {
             playerunitcount += 1;
+            unitcounttext.text = playerunitcount + " / " + PLAYER_UNIT_COUNT_MAX;
+            return 1;
         }
         else if (tier == 2 && PLAYER_UNIT_COUNT_MAX >= playerunitcount + 2)
         {
             playerunitcount += 2;
+            unitcounttext.text = playerunitcount + " / " + PLAYER_UNIT_COUNT_MAX;
+            return 1;
         }
         else if (tier == 3 && PLAYER_UNIT_COUNT_MAX >= playerunitcount + 3)
         {
             playerunitcount += 3;
+            unitcounttext.text = playerunitcount + " / " + PLAYER_UNIT_COUNT_MAX;
+            return 1;
         }
-        else if (tier == 3 && PLAYER_UNIT_COUNT_MAX >= playerunitcount + 3)
+        else if (tier == 4 && PLAYER_UNIT_COUNT_MAX >= playerunitcount + 4)
         {
-            playerunitcount += 3;
+            playerunitcount += 4;
+            unitcounttext.text = playerunitcount + " / " + PLAYER_UNIT_COUNT_MAX;
+            return 1;
         }
-        else if(tier !=1 && tier !=2 && tier!=3 && tier!=4)
-        {
+        else if(tier==1 || tier ==2 || tier==3 || tier==4)
+        { 
             Debug.Log("max unit count");
-            return 0;
+            return -2;
         }
 
         //tier is wrong
